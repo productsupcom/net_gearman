@@ -1,5 +1,5 @@
 {
-    "name": "brianlmoon/net_gearman",
+    "name": "productsupcom/net_gearman",
     "homepage": "http://brian.moonspot.net/GearmanManager",
     "description": "PHP daemon for managing gearman workers",
     "keywords": ["gearman","net_gearman","gearman-manager"],
