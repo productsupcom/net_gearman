@@ -191,13 +191,18 @@ class Net_Gearman_Connection
             );
         }
 
-        if (is_resource($socket)) {
-            self::$waiting[(int)$socket] = [];
-        } else {
-            self::$waiting[spl_object_id($socket)] = [];
-        }
+        self::$waiting[self::socketIdentifier($socket)] = [];
 
         return $socket;
+    }
+
+    static public function socketIdentifier($thing): int
+    {
+        if (is_resource($thing)) {
+            return (int) $thing;
+        }
+
+        return spl_object_id($thing);
     }
 
     /**

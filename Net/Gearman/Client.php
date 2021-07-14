@@ -220,7 +220,7 @@ class Net_Gearman_Client
         $s = $this->getConnection($task->uniq);
         Net_Gearman_Connection::send($s, $type, $params);
 
-        $s_key = (int)$s;
+        $s_key = Net_Gearman_Connection::socketIdentifier($s);
 
         if (!is_array(Net_Gearman_Connection::$waiting[$s_key])) {
             Net_Gearman_Connection::$waiting[$s_key] = array();
