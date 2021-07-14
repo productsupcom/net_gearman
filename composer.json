@@ -15,7 +15,8 @@
         "issues": "https://github.com/brianlmoon/net_gearman/issues"
     },
     "require": {
-        "php": ">=5.2.0"
+        "php": ">=8",
+        "ext-sockets": "*"
     },
     "autoload": {
         "classmap": [ "Net/Gearman" ]
