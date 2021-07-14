@@ -339,7 +339,8 @@ class Net_Gearman_Client
             $task->fail();
             break;
         case 'job_created':
-            $task         = array_shift(Net_Gearman_Connection::$waiting[(int)$s]);
+            $socketId     = Net_Gearman_Connection::socketIdentifier($s);
+            $task         = array_shift(Net_Gearman_Connection::$waiting[$socketId]);
             $task->handle = $resp['data']['handle'];
             if ($task->type == Net_Gearman_Task::JOB_BACKGROUND) {
                 $task->finished = true;
