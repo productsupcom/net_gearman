@@ -112,7 +112,7 @@ class Net_Gearman_Connection
      *
      * @return void
      */
-    final private function __construct()
+    private function __construct()
     {
         // Don't allow this class to be instantiated
     }
@@ -191,8 +191,18 @@ class Net_Gearman_Connection
             );
         }
 
-        self::$waiting[(int)$socket] = array();
+        self::$waiting[self::socketIdentifier($socket)] = [];
+
         return $socket;
+    }
+
+    static public function socketIdentifier($thing): int
+    {
+        if (is_resource($thing)) {
+            return (int) $thing;
+        }
+
+        return spl_object_id($thing);
     }
 
     /**
@@ -398,15 +408,17 @@ class Net_Gearman_Connection
     /**
      * Are we connected?
      *
-     * @param resource $conn The connection/socket to check
+     * @param null|Resource|Socket $conn The connection/socket to check
      *
      * @return boolean False if we aren't connected
      */
     static public function isConnected($conn)
     {
-        return (is_null($conn) !== true &&
-                is_resource($conn) === true &&
-                strtolower(get_resource_type($conn)) == 'socket');
+        if (PHP_MAJOR_VERSION === 8) {
+            return $conn instanceof Socket;
+        }
+
+        return $conn !== null && is_resource($conn);
     }
 
     /**
