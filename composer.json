@@ -15,7 +15,7 @@
         "issues": "https://github.com/brianlmoon/net_gearman/issues"
     },
     "require": {
-        "php": ">=8",
+        "php": "^7.2|^8",
         "ext-sockets": "*"
     },
     "autoload": {

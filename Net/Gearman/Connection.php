@@ -191,7 +191,12 @@ class Net_Gearman_Connection
             );
         }
 
-        self::$waiting[spl_object_id($socket)] = array();
+        if (is_resource($socket)) {
+            self::$waiting[(int)$socket] = [];
+        } else {
+            self::$waiting[spl_object_id($socket)] = [];
+        }
+
         return $socket;
     }
 
@@ -398,13 +403,17 @@ class Net_Gearman_Connection
     /**
      * Are we connected?
      *
-     * @param null|Socket $conn The connection/socket to check
+     * @param null|Resource|Socket $conn The connection/socket to check
      *
      * @return boolean False if we aren't connected
      */
     static public function isConnected($conn)
     {
-        return $conn instanceof Socket;
+        if (PHP_MAJOR_VERSION === 8) {
+            return $conn instanceof Socket;
+        }
+
+        return $conn !== null && is_resource($conn);
     }
 
     /**
