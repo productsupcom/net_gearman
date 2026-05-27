@@ -260,7 +260,10 @@ class Net_Gearman_Worker
 
             $idle = false;
             if ($sleep && count($this->conn)) {
+                $loadAvg = sys_getloadavg();
+                $loadStr = sprintf('%.2f', $loadAvg[1]);
                 foreach ($this->conn as $socket) {
+                    Net_Gearman_Connection::send($socket, 'set_worker_load', array('load' => $loadStr));
                     Net_Gearman_Connection::send($socket, 'pre_sleep');
                 }
 

@@ -72,7 +72,8 @@ class Net_Gearman_Connection
         'echo_req' => array(16, array('text')),
         'echo_res' => array(17, array('text')),
         'error' => array(19, array('err_code', 'err_text')),
-        'all_yours' => array(24, array())
+        'all_yours' => array(24, array()),
+        'set_worker_load' => array(43, array('load'))
     );
 
     /**
